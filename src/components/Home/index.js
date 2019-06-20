@@ -14,7 +14,7 @@ const Promise = global.Promise;
 const mapStateToProps = state => ({
   ...state.home,
   appName: state.common.appName,
-  token: state.common.token
+  token: state.common.token,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -23,12 +23,12 @@ const mapDispatchToProps = dispatch => ({
   onLoad: (tab, pager, payload) =>
     dispatch({ type: HOME_PAGE_LOADED, tab, pager, payload }),
   onUnload: () =>
-    dispatch({  type: HOME_PAGE_UNLOADED })
+    dispatch({  type: HOME_PAGE_UNLOADED }),
 });
 
 class Home extends React.Component {
   componentWillMount() {
-    const tab = this.props.token ? 'feed' : 'all';
+
   }
 
   componentWillUnmount() {
@@ -42,7 +42,7 @@ class Home extends React.Component {
         <Banner token={this.props.token} appName={this.props.appName} />
 
         <div className="view flex">
-          <MainView currentUser={this.props.currentUser}/>
+          <MainView/>
         </div>
 
       </div>

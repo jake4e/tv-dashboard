@@ -21,8 +21,8 @@ const mapStateToProps = state => {
   }};
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload, token) =>
-    dispatch({ type: APP_LOAD, payload, token, skipTracking: true }),
+  onLoad: (payload, token, events) =>
+    dispatch({ type: APP_LOAD, payload, token, events, skipTracking: true }),
   onRedirect: () =>
     dispatch({ type: REDIRECT })
 });
@@ -42,7 +42,7 @@ class App extends React.Component {
       agent.setToken(token);
     }
 
-    this.props.onLoad(token ? agent.Auth.user(window.localStorage.getItem('email')) : null, token);
+    this.props.onLoad(token ? agent.Auth.user(window.localStorage.getItem('email')) : null, token, agent.Calendar.accepted());
 
   }
 

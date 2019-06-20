@@ -5,7 +5,7 @@ const API_ROOT = 'https://steffes-analytics.azurewebsites.net/api';
 
 const encode = encodeURIComponent;
 const responseBody = res => res.data;
-const errorBody = res => res;
+const errorBody = res =>  res;
 
 let token = null;
 
@@ -52,6 +52,11 @@ const Auth = {
     axios.post('https://steffes-analytics.azurewebsites.net/token', qs.stringify({username: email, password: password, grant_type: 'password'})).then(responseBody),
 };
 
+const Calendar = {
+  accepted: () =>
+    requests.get('/marketing/get/accepted')
+}
+
 const Tags = {
   getAll: () => requests.get('/tags')
 };
@@ -68,5 +73,6 @@ export default {
   Auth,
   Profile,
   Tags,
+  Calendar,
   setToken: _token => { token = _token; }
 };

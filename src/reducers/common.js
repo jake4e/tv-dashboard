@@ -8,13 +8,15 @@ import {
   PROFILE_PAGE_UNLOADED,
   SETTINGS_PAGE_UNLOADED,
   LOGIN_PAGE_UNLOADED,
-  USER
+  USER,
+  GET_EVENTS
 } from '../constants/actionTypes';
 
 const defaultState = {
   appName: 'Steffes TV',
   token: null,
-  viewChangeCounter: 0
+  viewChangeCounter: 0,
+  events: []
 };
 
 export default (state = defaultState, action) => {
@@ -24,7 +26,8 @@ export default (state = defaultState, action) => {
         ...state,
         token: action.token || null,
         appLoaded: true,
-        currentUser: action.payload ? action.payload : null
+        currentUser: action.payload ? action.payload : null,
+        events: action.events ? action.events : []
       };
     case REDIRECT:
       return { ...state, redirectTo: null };
@@ -51,6 +54,11 @@ export default (state = defaultState, action) => {
     case PROFILE_PAGE_UNLOADED:
     case SETTINGS_PAGE_UNLOADED:
     case LOGIN_PAGE_UNLOADED:
+    case GET_EVENTS:
+      return{
+        ...state,
+        events: action.error ? null : action.payload
+      }
     default:
       return state;
   }

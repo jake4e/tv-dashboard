@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../img/tv-logo.png';
 
 const LoggedOutView = props => {
   if (!props.currentUser) {
@@ -37,7 +38,7 @@ const LoggedInView = props => {
 
         <li className="nav-item">
           <Link to="/editor" className="nav-link">
-            <i className="ion-compose"></i>&nbsp;New Post
+            <i className="ion-compose"></i>&nbsp;New Event
           </Link>
         </li>
 
@@ -70,7 +71,7 @@ class Header extends React.Component {
         <div className="container">
 
           <Link to="/" className="navbar-brand">
-            {this.props.appName.toLowerCase()}
+            <img src={Logo} alt='Steffes TV' className='logo'/>
           </Link>
 
           <LoggedOutView currentUser={this.props.currentUser} />

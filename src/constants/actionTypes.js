@@ -19,3 +19,4 @@ export const ADD_TAG = 'ADD_TAG';
 export const REMOVE_TAG = 'REMOVE_TAG';
 export const UPDATE_FIELD_AUTH = 'UPDATE_FIELD_AUTH';
 export const USER = 'USER';
+export const GET_EVENTS = 'GET_EVENTS';
