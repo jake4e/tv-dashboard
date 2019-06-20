@@ -4,11 +4,13 @@ import {
   ASYNC_END,
   LOGIN,
   LOGOUT,
-  REGISTER
+  USER
 } from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
+  console.log(action);
   if (isPromise(action.payload)) {
+    console.log(action);
     store.dispatch({ type: ASYNC_START, subtype: action.type });
 
     const currentView = store.getState().viewChangeCounter;
@@ -47,13 +49,16 @@ const promiseMiddleware = store => next => action => {
 };
 
 const localStorageMiddleware = store => next => action => {
-  if (action.type === REGISTER || action.type === LOGIN) {
+  if (action.type === LOGIN) {
     if (!action.error) {
-      window.localStorage.setItem('jwt', action.payload.user.token);
-      agent.setToken(action.payload.user.token);
+      window.localStorage.setItem('token', action.payload.access_token);
+      window.localStorage.setItem('email', store.getState().auth.email);
+      agent.setToken(action.payload.access_token);
+      store.dispatch({type: USER, payload: agent.Auth.user(store.getState().auth.email)})
     }
   } else if (action.type === LOGOUT) {
-    window.localStorage.setItem('jwt', '');
+    window.localStorage.setItem('token', '');
+    window.localStorage.setItem('email', '');
     agent.setToken(null);
   }
 

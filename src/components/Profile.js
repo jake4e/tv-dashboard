@@ -1,11 +1,8 @@
-import ArticleList from './ArticleList';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import agent from '../agent';
 import { connect } from 'react-redux';
 import {
-  FOLLOW_USER,
-  UNFOLLOW_USER,
   PROFILE_PAGE_LOADED,
   PROFILE_PAGE_UNLOADED
 } from '../constants/actionTypes';
@@ -62,15 +59,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFollow: username => dispatch({
-    type: FOLLOW_USER,
-    payload: agent.Profile.follow(username)
-  }),
   onLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
-  onUnfollow: username => dispatch({
-    type: UNFOLLOW_USER,
-    payload: agent.Profile.unfollow(username)
-  }),
   onUnload: () => dispatch({ type: PROFILE_PAGE_UNLOADED })
 });
 
@@ -150,12 +139,6 @@ class Profile extends React.Component {
               <div className="articles-toggle">
                 {this.renderTabs()}
               </div>
-
-              <ArticleList
-                pager={this.props.pager}
-                articles={this.props.articles}
-                articlesCount={this.props.articlesCount}
-                state={this.props.currentPage} />
             </div>
 
           </div>
