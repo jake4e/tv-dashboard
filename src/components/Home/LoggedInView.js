@@ -50,6 +50,10 @@ const calendars = [
   }
 ]
 
+const calendarTheme = {
+  'month.schedule.height': '50px',
+}
+
 class LoggedInView extends Component{
   constructor(props){
     super(props);
@@ -66,7 +70,33 @@ class LoggedInView extends Component{
     if(this.props.currentUser){
       const calendarInstance = this.calendarRef.current.getInstance();
       calendarInstance.changeView('month', true);
-      this.createEvents();
+
+      console.log(calendarInstance);
+
+      calendarInstance.on('beforeUpdateSchedule', (event) => {
+        var schedule = event.schedule;
+        var startTime = event.start;
+        var endTime = event.end;
+        calendarInstance.updateSchedule(schedule.id, schedule.calendarId, {
+            start: startTime,
+            end: endTime
+        });
+
+        let scheduleArray = this.state.schedule;
+
+        let index = scheduleArray.findIndex(x => x.id === schedule.id);
+
+        scheduleArray[index].start = startTime;
+        scheduleArray[index].end = endTime;
+
+        this.setState({
+          schedule: scheduleArray
+        })
+      })
+
+      if(this.props.events){
+        this.createEvents();
+      }
     }
   }
 
@@ -115,12 +145,11 @@ class LoggedInView extends Component{
         state: 'busy',
         salesRep: item.salesRep,
         body: item.description,
-        phone: item.phone
+        phone: item.phone,
+        height: '50px'
       }
       schedule.push(event);
     }
-
-    console.log(schedule)
 
     this.setState({
       schedule: schedule
@@ -189,13 +218,15 @@ class LoggedInView extends Component{
             }}
             calendars={calendars}
             schedules={this.state.schedule}
-            scheduleView
-            taskView
-            useDetailPopup
-            useCreationPopup
+            scheduleView={false}
+            taskView={false}
+            useDetailPopup={false}
+            useCreationPopup={false}
             template={{
 
             }}
+            theme={calendarTheme}
+            disableDblClick={true}
           />
         </>
       )

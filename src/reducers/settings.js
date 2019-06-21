@@ -13,7 +13,9 @@ export default (state = {}, action) => {
         errors: action.error ? action.payload.errors : null
       };
     case SETTINGS_PAGE_UNLOADED:
-      return {};
+      return {
+        ...state
+      };
     case ASYNC_START:
       return {
         ...state,

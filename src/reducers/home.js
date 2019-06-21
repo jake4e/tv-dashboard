@@ -7,7 +7,7 @@ export default (state = {}, action) => {
         ...state,
       };
     case HOME_PAGE_UNLOADED:
-      return {};
+      return state;
     default:
       return state;
   }

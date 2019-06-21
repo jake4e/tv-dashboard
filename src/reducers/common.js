@@ -51,7 +51,7 @@ export default (state = defaultState, action) => {
         currentUser: action.error ? null : action.payload
       }
     case HOME_PAGE_UNLOADED:
-    case PROFILE_PAGE_UNLOADED:
+      return state;
     case SETTINGS_PAGE_UNLOADED:
     case LOGIN_PAGE_UNLOADED:
     case GET_EVENTS:
